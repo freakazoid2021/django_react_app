@@ -81,3 +81,13 @@ def delete_note(request, pk):
 
     return Response("Note was deleted")
 
+
+@api_view(['POST'])
+def create_note(request):
+    data = request.data
+    note = Note.objects.create(
+        body=data['body']
+    )
+    serializer = NoteSerializer(note, many=False)
+    
+    return Response(serializer.data)
